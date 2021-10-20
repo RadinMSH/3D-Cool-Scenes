@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title> 3D Cool Scenes </title>
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <meta charset="UTF-16" />
+        <style>
+            
+            
+            @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+            body {
+                background: black;
+                margin: 0;
+            }
+            
+            * {
+                box-sizing: border-box;
+                text-align: center;
+                color: #fff;
+                font-family: Poppins, sans-serif;
+                user-select: none;
+            }
+            
+            .container {
+                width: 70vw;
+                height: 105vw;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                -webkit-position: absolute;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 255, 255, .05);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-radius: 10px;
+                border: 5px solid rgba(255, 255, 255, .1);
+                padding: 10px;
+                overflow-y: auto;
+            }
+            
+            .container::-webkit-scrollbar {width: 3px;}
+            
+            .container::-webkit-scrollbar-thumb {
+                width: 3px;
+                background: #fff;
+                border-radius: 1.5px;
+            }
+            
+            .circle1 {
+                background: linear-gradient(35deg, red, orange);
+                background: -moz-linear-gradient(35deg, red, orange);
+                border-radius: 50%;
+                height: 150px;
+                position: absolute;
+                -webkit-position: absolute;
+                top: 500px;
+                left: 5px;
+                width: 150px;
+            }
+            
+            .circle2 {
+                background: linear-gradient(-35deg, #162033, violet);
+                background: -moz-linear-gradient(-35deg, #162033, violet);
+                border-radius: 50%;
+                height: 140px;
+                width: 140px;
+                position: absolute;
+                -webkit-position: absolute;
+                top: 120px;
+                left: 250px;
+            }
+            
+            button {
+                background: transparent;
+                border-radius: 10px;
+                padding: 5px;
+                display: block;
+                margin: 10px auto;
+                outline: none;
+            }
+            
+            h2, h3, .card {
+                position: absolute;
+                -webkit-position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            
+            h3 {top: 17%;}
+            
+            canvas {
+                z-index: 3;
+                transition: all 1s;
+                opacity: 0;
+            }
+            
+            img {
+                opacity: 0;
+                transition: all 3s;
+                pointer-events: none;
+                z-index: 0;
+            }
+            
+            main, header, loader, canvas {display: none;}
+            
+            .loader {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                border-width: 3px;
+                border-color: deepskyblue;
+                border-style: solid solid none none;
+                position: absolute;
+                -webkit-position: absolute;
+                top: 51%;
+                left: 65%;
+                transform: translate(-50%, -50%);
+                animation: loader 1s infinite linear;
+            }
+            
+            @keyframes loader {
+                0% {transform: rotate(0deg);}
+                to {transform: rotate(360deg);}
+            }
+            
+            #bgDIV {
+                background: linear-gradient(rgba(0,0,0,0), #000);
+                z-index:
+
+2;
+                background: -moz-linear-gradient(rgba(0,0,0,0), #000);
+                pointer-events: none;
+            }
+            
+            #bgDIV, canvas, img {
+                width: 100vw;
+                height: 100vh;
+            }
+            
+            #nd, #rd, #bgDIV, .instructions {
+                position: absolute;
+                -webkit-position: absolute;
+                top: 0;
+                left: 0;
+            }
+            
+            .instructions {
+                z-index: 1;
+                width: 100vw;
+                height: 95vh;
+                overflow-y: auto;
+                padding: 5px;
+                font-size: 17px;
+            }
+            
+            #nd {filter: brightness(.95);}
+            
+            .enableVR {display: none;}
+            
+            
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <p> Welcome to this project we will first start with the instructions </p>
+            <button> Start </button>
+        </div>
+        <audio src="https://www.dl.dropboxusercontent.com/s/71l9b85rjv2gd0w/Coffin-Dance-%28Astronomia%29_Tony-Igy%20%26%20Vicetone.mp3" loop></audio>
+        <header>
+            <div id="bgDIV"></div>
+            <div class="instructions">
+                <h1> Welcome </h1>
+                <p> Hello and welcome to my new project! I'm Radin Masiha (the programer of this project) and I want to take you to a new world! You will need a 3D VR (Virtual Reality) headset to enter this world. Furthermore, you should observe the following tips! </p>
+                <p> This program has been written in three languages! HTML, CSS, JS; so your browser should render them all! In this case, if your browser or phone is old, or your JavaScript browser is disabled, this program will not work! </p>
+                <p> The best browser that matches this program is Samsung Internet version 11.2+. Other browsers may not support some features of this code! Chrome 71+ will also support but only in secure contents. In this case if you have SSL Certificate you can try it on Chrome to, yet Samsung Internet is easier to use. </p>
+                <p> After your selected scene was loaded, you will be able to use your fingers to rotate the scene. If the scene doesn't load, be patient; loading may take upto a minute! If it still doesn't load, try refreshing. </p>
+                <p> If you are using Samsung Internet or Chrome, you will see a button says "Enter VR"; if a browser doesn't support this feature, then it writes "WebXR not available", or "VR not supported" according to what the problem is. After you pressed the button, if you haven't installed the Google VR Services, you will be asked to install it first. However, if you had previously installed this service application, you are able to view scenes in VR mode! Put on your headset and enjoy the world! </p>
+                <br />
+                <h4 style="font-size: 25px"> For Developers! </h4>
+                <p>
+                    This code has been registered in Sololearn and other sites and applications, so it's under license and any type of copy has prosecution!
+                    <br/>
+                    &copy; <span></span>
+                </p>
+                <button style="font-size: 20px; margin-bottom: 25vh"> COUNTINUE => </button>
+            </div>
+                <img id="st" src="https://www.dl.dropboxusercontent.com/s/3trnyk4dalgl9lu/Wed_28_07_2021_19_31_36.png" />
+                <img id="nd" src="https://www.dl.dropboxusercontent.com/s/82mrbutbxcwvvll/18063_uhd.jpg" />
+                <img id="rd" src="https://www.dl.dropboxusercontent.com/s/wwhfq1ipjll47q8/PUBG.jpg" />
+        </header>
+        <main>
+            <h1> 3D Cool Scenes </h1>
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <h3> Select a Scene </h3>
+            <div class="container">
+                <button id="autumn_road"> Autumn Road </button>
+                <button id="snowy_hillside"> Snowy Hillside </button>
+                <button id=" moulton_f
+
+alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
+                <button id=" whipple_creek_regional_park"> Whipple Creek Regional Park </button>
+                <button id="river_walk"> River Walk </button>
+                <button id="mossy_forest"> Mossy Forest </button>
+                <button id="small_cave"> Small Cave </button>
+                <button id="hikers_cave"> Hikers Cave </button>
+                <button id="lauter_waterfall"> Lauter Waterfall </button>
+                <button id="blaubeuren_hillside"> Blaubeuren Hillside </button>
+                <button id="kloppenheim"> Kloppenheim </button>
+                <button id="bismarckturm"> Bismarckturm </button>
+                <button id="greenwich_park"> Greenwich Park </button>
+                <button id="evening_road"> Evening Road </button>
+                <button id="lythwood_terrace"> Lythwood Terrace </button>
+                <button id="northcliff"> Northcliff </button>
+                <button id="wobbly_bridge"> Wobbly Bridge </button>
+                <button id="private_jet_1"> Private Jet 1 </button>
+                <button id="private_jet_2"> Private Jet 2 </button>
+                <button id="BMW_interior"> BMW Interior </button>
+                <button id="Lamborghini_interior"> Lamborghini Interior </button>
+            </div>
+        </main>
+        <loader><h2> LOADING </h2><div class="loader"></div></loader>
+        <div class="enableVR"></div>
+        <canvas> Sorry Your browser is old and doesn't support the canvas tag </canvas>
+        <script type="module">
+            
+            
+            import * as THREE from "https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js";
+            import {OrbitControls} from "https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js";
+            import {VRButton} from "https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/webxr/VRButton.js";
+            
+            let main = document.querySelector("main");
+            let ctr = document.querySelector(".container");
+            let loadingCTR = document.querySelector("loader");
+            let loaded = false;
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            let canvas = document.querySelector("canvas");
+            let bgIMG = document.getElementsByTagName("img");
+            let card = document.querySelector(".card");
+            let start = card.querySelector("button");
+            let header = document.querySelector("header");
+            let go = header.querySelector("button");
+            let music = document.querySelector('audio');
+            let vrButton = document.querySelector(".enableVR");
+            
+            setInterval(() => document.querySelector("span").innerText = new Date().getFullYear(), 1000);
+            
+            for(let i = 0; i < bgIMG.length; i++) {
+                bgIMG[i].alt = "Your internet connection is low! Please refresh and retry with a better connection";
+            }
+            
+            start.onclick = () => {
+                music.play();
+                
+                setTimeout(() => {
+                    card.style.display = "none";
+                    document.body.style.background = "#162033";
+                    header.style.display = "block";
+                    
+                    function changeBG() {
+                        bgIMG[0].style.opacity = 1;
+                        bgIMG[1].style.opacity = 0;
+                        bgIMG[2].style.opacity = 0;
+                        
+                        setTimeout(() => {
+                            bgIMG[0].style.opacity = 0;
+                            bgIMG[1].style.opacity = 1;
+                            bgIMG[2].style.opacity = 0;
+                        }, 10000);
+                        
+                        setTimeout(() => {
+                            bgIMG[0].style.opacity = 0;
+                            bgIMG[1].style.opacity = 0;
+                            bgIMG[2]
+
+.style.opacity = 1;
+                        }, 20000);
+                        
+                        setInterval(changeBG, 30000);
+                    }
+                    changeBG();
+                }, 200);
+            };
+            
+            go.onclick = () => {
+                header.style.display = "none";
+                main.style.display = "block";
+                let play = confirm("The music will still be heard when you're viewing the scene");
+                
+                if(play) {
+                    return false;
+                }
+                else {
+                    let vol = 1;
+                    
+                    setInterval(() => {
+                        if(vol > .025) {
+                            vol -= .025;
+                            music.volume = vol;
+                        }
+                        else {music.pause();}
+                    }, 100);
+                }
+            };
+            
+            const scene = new THREE.Scene();
+            const cam = new THREE.PerspectiveCamera(70, w/h, .1, 1000);
+            const renderer = new THREE.WebGLRenderer({canvas, antialias: true});
+            const loader = new THREE.TextureLoader();
+            const controls = new OrbitControls(cam, canvas);
+            
+            cam.position.set(0, 1.65, 0);
+            renderer.setSize(w,h);
+            renderer.xr.enabled = true;
+            controls.enableDamping = true;
+            controls.rotateSpeed = .75;
+            controls.rotateSpeed *= -1;
+            vrButton.appendChild(VRButton.createButton(renderer));
+            
+            const bgURLs = {
+                autumn_road: "https://www.dl.dropboxusercontent.com/s/3d9adg6skc4qbjr/autumn_road.jpg",
+                snowy_hillside: "https://www.dl.dropboxusercontent.com/s/l61yxmvn6ct3zq7/snowy_hillside.jpg",
+                moulton_falls_east_train_tunnel: "https://www.dl.dropboxusercontent.com/s/d7jo4hnh7b5y7la/moulton_falls_train_tunnel_east.jpg",
+                whipple_creek_regional_park: "https://www.dl.dropboxusercontent.com/s/xudv0otxoylhb0v/whipple_creek_regional_park_01.jpg",
+                river_walk: "https://www.dl.dropboxusercontent.com/s/ow2xog0efj73djx/river_walk_1.jpg",
+                mossy_forest: "https://www.dl.dropboxusercontent.com/s/cbnrf68f7s4qly3/mossy_forest.jpg",
+                small_cave: "https://www.dl.dropboxusercontent.com/s/b6peerrzrxrwd16/small_cave.jpg",
+                hikers_cave: "https://www.dl.dropboxusercontent.com/s/0nyk3p2lbtsqauz/hikers_cave.jpg",
+                lauter_waterfall: "https://www.dl.dropboxusercontent.com/s/ghnkopambewfgei/lauter_waterfall.jpg",
+                blaubeuren_hillside: "https://www.dl.dropboxusercontent.com/s/0oawudruvsmgxuj/blaubeuren_hillside.jpg",
+                kloppenheim: "https://www.dl.dropboxusercontent.com/s/5mgnfjowcrbnnun/kloppenheim_01.jpg",
+                greenwich_park: "https://www.dl.dropboxusercontent.com/s/nu3cix13y9nh15o/greenwich_park_02.jpg",
+                bismarckturm: "https://www.dl.dropboxusercontent.com/s/kdqrrktz3oyh6ui/bismarckturm.jpg",
+                evening_road: "https://www.dl.dropboxusercontent.com/s/9hq1te87va92qk1/evening_road_01.jpg",
+                lythwood_terrace: "https://www.dl.dropboxusercontent.com/s/a947pncmr2xpsyc/lythwood_terrace.jpg",
+                northcliff: "https://www.dl.dropboxusercontent.com/s/1r1oyrpnb5pc98o/northcliff.jpg",
+                wobbly_bridge: "https://www.dl.dropboxusercontent.com/s/65qsj6m4o1yq8nx/wobbly_bridge.jpg",
+                private_jet_1:"https://www.dl.dropboxusercontent.com/s/rhfdtj747eynowx/OWN_360jet_003.jpg",
+                private_jet_2: "https://www.dl.dropboxusercontent.com/s/acsjkgu28wsb63n/OWN_360jet_004.jpg",
+                BMW_interior: "https://www.dl.dropboxusercontent.com/s/l9nj40u8kjp341v/mateusz-kozbielak-bmw140spherical.jpg",
+                Lamborghini_interior: "https://www.dl.dropboxusercontent.com/s/qgcz1dpr1elauiu/1_ZO6r2IvFCVCH0KIoJ8VgZQ.jpeg",
+            };
+            
+            ctr.onclick = e => {
+
+						if(e.target.id.includes("autumn_road snowy")) {
+          		 							alert("Please click on the buttons to select a scene");
+          										return false;
+          		}
+            				
+                setTimeout(() => {
+                    main.remove();
+                    loadingCTR.style.display = "block";
+                    canvas.style.display = "block";
+                }, 200);
+                
+                let bgName = e.target.id;
+                
+                let bg = loader.load(bgURLs[bgName], () => loaded = true);
+                bg.encoding = THREE.GammaEncoding;
+                bg.mapping = THREE.EquirectangularReflectionMapping;
+                bg.anisotropy = 20;
+                scene.background = bg;
+                
+                setInterval(() => {
+                    
+                    if(loaded) {
+                        setTimeout(() => loadingCTR.remove(), 1000);
+                        canvas.style.opacity = 1;
+                        vrButton.style.display = "block";
+                    }
+                    else {
+                        loadingCTR.style.display = "block";
+                        canvas.style.opacity = 0;
+                        vrButton.style.display = "none";
+                    }
+             			}, 100);
+            };
+            
+            window.onresize = () => {
+            				let w = window.innerWidth;
+            				let h = window.innerHeight;
+            				renderer.setSize(w,h);
+            				cam.aspect = w/h;
+            				cam.updateProjectionMatrix();
+            };
+            
+            const animate = () => {
+                renderer.render(scene, cam);
+                controls.update();
+            };
+            renderer.setAnimationLoop(animate);
+            animate();
+            
+            
+        </script>
+        <noscript>
+        				<h1> Browser Support Error! </h1>
+        				<p> Your browser JavaScript option is disabled or your browser doesn't support this language! Please enable and retry </p>
+        </noscript>
+    </body>
+</html>
