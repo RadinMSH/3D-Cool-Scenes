@@ -347,10 +347,10 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
             
             ctr.onclick = e => {
 
-						if(e.target.id.includes("autumn_road snowy")) {
-          		 							alert("Please click on the buttons to select a scene");
-          										return false;
-          		}
+		if(e.target.id.includes("autumn_road snowy")) {
+               	     alert("Please click on the buttons to select a scene");
+                     return false;
+                }
             				
                 setTimeout(() => {
                     main.remove();
@@ -378,15 +378,15 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
                         canvas.style.opacity = 0;
                         vrButton.style.display = "none";
                     }
-             			}, 100);
+             	}, 100);
             };
             
             window.onresize = () => {
-            				let w = window.innerWidth;
-            				let h = window.innerHeight;
-            				renderer.setSize(w,h);
-            				cam.aspect = w/h;
-            				cam.updateProjectionMatrix();
+                let w = window.innerWidth;
+      		let h = window.innerHeight;
+            	renderer.setSize(w,h);
+      		cam.aspect = w/h;
+            	cam.updateProjectionMatrix();
             };
             
             const animate = () => {
@@ -399,8 +399,8 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
             
         </script>
         <noscript>
-        				<h1> Browser Support Error! </h1>
-        				<p> Your browser JavaScript option is disabled or your browser doesn't support this language! Please enable and retry </p>
+            <h1> Browser Support Error! </h1>
+            <p> Your browser JavaScript option is disabled or your browser doesn't support this language! Please enable and retry </p>
         </noscript>
     </body>
 </html>
