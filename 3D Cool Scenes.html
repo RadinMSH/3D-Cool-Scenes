@@ -127,7 +127,7 @@
             }
             
             #bgDIV {
-                background: linear-gradient(rgba(0,0,0,0), #000);
+                background: linear-gradient(rgba(0,0,0,0) 25%, #000);
                 z-index:
 
 2;
@@ -159,6 +159,19 @@
             #nd {filter: brightness(.95);}
             
             .enableVR {display: none;}
+            
+            #arrow {
+                display: none;
+                font-size: 20px;
+                padding: 5px;
+                cursor: pointer;
+                width: 50px;
+                height: 50px;
+                z-index: 4;
+                position: absolute;
+                top: 0;
+                left: 5px;
+            }
             
             
         </style>
@@ -200,7 +213,6 @@
                 <button id="autumn_road"> Autumn Road </button>
                 <button id="snowy_hillside"> Snowy Hillside </button>
                 <button id=" moulton_f
-
 alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
                 <button id=" whipple_creek_regional_park"> Whipple Creek Regional Park </button>
                 <button id="river_walk"> River Walk </button>
@@ -225,6 +237,7 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
         <loader><h2> LOADING </h2><div class="loader"></div></loader>
         <div class="enableVR"></div>
         <canvas> Sorry Your browser is old and doesn't support the canvas tag </canvas>
+        <p id="arrow"> &#8592 </p>
         <script type="module">
             
             
@@ -239,13 +252,15 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
             let w = window.innerWidth;
             let h = window.innerHeight;
             let canvas = document.querySelector("canvas");
-            let bgIMG = document.getElementsByTagName("img");
+            let bgIMG = document.querySelectorAll("img");
             let card = document.querySelector(".card");
             let start = card.querySelector("button");
             let header = document.querySelector("header");
             let go = header.querySelector("button");
             let music = document.querySelector('audio');
             let vrButton = document.querySelector(".enableVR");
+            let arrow = document.querySelector("#arrow");
+            let n = -1;
             
             setInterval(() => document.querySelector("span").innerText = new Date().getFullYear(), 1000);
             
@@ -262,27 +277,25 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
                     header.style.display = "block";
                     
                     function changeBG() {
-                        bgIMG[0].style.opacity = 1;
-                        bgIMG[1].style.opacity = 0;
-                        bgIMG[2].style.opacity = 0;
+                        if(n > 1) {
+                            n = 0;
+                        }
+                        else {
+                            n++;
+                        }
                         
-                        setTimeout(() => {
-                            bgIMG[0].style.opacity = 0;
-                            bgIMG[1].style.opacity = 1;
-                            bgIMG[2].style.opacity = 0;
-                        }, 10000);
+                        bgIMG[n].style.opacity = 1;
                         
-                        setTimeout(() => {
-                            bgIMG[0].style.opacity = 0;
-                            bgIMG[1].style.opacity = 0;
-                            bgIMG[2]
-
-.style.opacity = 1;
-                        }, 20000);
-                        
-                        setInterval(changeBG, 30000);
+                        for(let num = 0; num <= 2; num++) {
+                            if(num == n) {
+                                continue;
+                            }
+                            
+                            bgIMG[num].style.opacity = 0;
+                        }
                     }
                     changeBG();
+                    setInterval(changeBG, 10000);
                 }, 200);
             };
             
@@ -339,21 +352,31 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
                 lythwood_terrace: "https://www.dl.dropboxusercontent.com/s/a947pncmr2xpsyc/lythwood_terrace.jpg",
                 northcliff: "https://www.dl.dropboxusercontent.com/s/1r1oyrpnb5pc98o/northcliff.jpg",
                 wobbly_bridge: "https://www.dl.dropboxusercontent.com/s/65qsj6m4o1yq8nx/wobbly_bridge.jpg",
-                private_jet_1:"https://www.dl.dropboxusercontent.com/s/rhfdtj747eynowx/OWN_360jet_003.jpg",
+                private_jet_1: "https://www.dl.dropboxusercontent.com/s/rhfdtj747eynowx/OWN_360jet_003.jpg",
                 private_jet_2: "https://www.dl.dropboxusercontent.com/s/acsjkgu28wsb63n/OWN_360jet_004.jpg",
                 BMW_interior: "https://www.dl.dropboxusercontent.com/s/l9nj40u8kjp341v/mateusz-kozbielak-bmw140spherical.jpg",
                 Lamborghini_interior: "https://www.dl.dropboxusercontent.com/s/qgcz1dpr1elauiu/1_ZO6r2IvFCVCH0KIoJ8VgZQ.jpeg",
             };
             
             ctr.onclick = e => {
-
-		if(e.target.id.includes("autumn_road snowy")) {
-               	     alert("Please click on the buttons to select a scene");
+                arrow.style.display = "block";
+                
+                arrow.onclick = () => {
+                    canvas.style.display = "none";
+                    canvas.style.opacity = 0;
+                    arrow.style.display = "none";
+                    main.style.display = "block";
+                    vrButton.style.display = "none";
+                    loaded = false;
+                }
+                
+                if(e.target.id.includes("autumn_road snowy")) {
+                        alert("Please click on the buttons to select a scene");
                      return false;
                 }
-            				
+                
                 setTimeout(() => {
-                    main.remove();
+                    main.style.display = "none";
                     loadingCTR.style.display = "block";
                     canvas.style.display = "block";
                 }, 200);
@@ -367,26 +390,20 @@ alls_east_train_tunnel"> Moulton Falls East Train Tunnel </button>
                 scene.background = bg;
                 
                 setInterval(() => {
-                    
                     if(loaded) {
-                        setTimeout(() => loadingCTR.remove(), 1000);
+                        setTimeout(() => loadingCTR.style.display = "none", 1000);
                         canvas.style.opacity = 1;
                         vrButton.style.display = "block";
                     }
-                    else {
-                        loadingCTR.style.display = "block";
-                        canvas.style.opacity = 0;
-                        vrButton.style.display = "none";
-                    }
-             	}, 100);
+                }, 100);
             };
             
             window.onresize = () => {
                 let w = window.innerWidth;
-      		let h = window.innerHeight;
-            	renderer.setSize(w,h);
-      		cam.aspect = w/h;
-            	cam.updateProjectionMatrix();
+                let h = window.innerHeight;
+                renderer.setSize(w,h);
+                cam.aspect = w/h;
+                cam.updateProjectionMatrix();
             };
             
             const animate = () => {
